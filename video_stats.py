@@ -10,7 +10,7 @@ CHANEL_HANDLE = 'MrBeast&key'
 
 def get_video_count():
     try:
-        url = f'https://youtube.googleapis.com/youtube/v3/channels?part=statistics&forHandle={CHANEL_HANDLE}={API_KEY}'
+        url = f'https://youtube.googleapis.com/youtube/v3/channels?part=contentDetails&forHandle={CHANEL_HANDLE}={API_KEY}'
 
         responce = requests.get(url)
         responce.raise_for_status()
@@ -18,11 +18,10 @@ def get_video_count():
 
         # print(json.dumps(data,indent = 4))
 
-        # data.items[0].statistics.videoCount
         channel_items = data["items"][0]
-        channel_videocount = channel_items["statistics"]["videoCount"]
-        print(channel_videocount)
-        return channel_videocount
+        channel_playlistId = channel_items["contentDetails"]["relatedPlaylists"]["uploads"]
+        print(channel_playlistId)
+        return channel_playlistId
     except requests.exceptions.RequestException as e:
         raise e
     
